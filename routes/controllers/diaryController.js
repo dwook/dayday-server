@@ -54,3 +54,12 @@ exports.getDiary = async function(req, res, next) {
     next();
   }
 };
+
+exports.getDiaryById = async function(req, res, next) {
+  try {
+    const diary = await Diary.findById(req.params.diary_id);
+    res.json({ diary });
+  } catch {
+    next();
+  }
+};

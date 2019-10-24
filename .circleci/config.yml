@@ -34,9 +34,9 @@ jobs:
           name: Deploy to env
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-                eb deploy dayday-backend
+                eb deploy DaydayBackend-env
             else
-                eb deploy dayday-backend-development
+                eb deploy DaydayBackend-env-development
             fi
 workflows:
   version: 2

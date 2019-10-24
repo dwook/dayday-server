@@ -20,13 +20,11 @@ exports.facebookAuth = function(req, res, next) {
         `https://graph.facebook.com/v4.0/me?fields=id,name,email,picture&access_token=${token}`
       )
       .then(function(response) {
-        console.log('데이터', response.data);
         const facebook_id = response.data.id;
         const name = response.data.name;
         const profile_image = response.data.picture.data.url;
-        console.log('여기');
         User.find({ facebook_id: facebook_id }, function(err, data) {
-          console.log('유저파인드', data);
+          console.log('유저 존재확인', data);
           const user = data[0];
           if (err) {
             return next(err);
@@ -42,11 +40,11 @@ exports.facebookAuth = function(req, res, next) {
                 return next(err);
               }
               console.log('유저생성');
-              res.json({ token: tokenForUser(user), user });
+              res.json({ user });
             });
           } else {
             console.log('기존유저');
-            res.json({ token: tokenForUser(user), user });
+            res.json({ user });
           }
         });
       })

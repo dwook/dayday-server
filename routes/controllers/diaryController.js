@@ -1,17 +1,14 @@
-const axios = require('axios');
 const Diary = require('../../models/Diary');
 const moment = require('moment');
 
 exports.createDiary = async function(req, res, next) {
   try {
-    console.log('일기가 들어옵니다.', req.body.diary);
-    console.log(req.body);
     Diary.find(
       {
         created_at: req.body.date
       },
       async function(err, data) {
-        console.log('다이어리 파인드', data);
+        console.log('일기 존재확인', data);
         const diary = data[0];
         if (!diary) {
           const diary = new Diary({
@@ -40,7 +37,6 @@ exports.createDiary = async function(req, res, next) {
 };
 
 exports.getDiary = async function(req, res, next) {
-  console.log(req.query);
   try {
     const diary = await Diary.find({
       writer: req.query.writer,

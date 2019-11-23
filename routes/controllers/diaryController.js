@@ -8,7 +8,6 @@ exports.createDiary = async function(req, res, next) {
         created_at: req.body.date
       },
       async function(err, data) {
-        console.log('일기 존재확인', data);
         const diary = data[0];
         if (!diary) {
           const diary = new Diary({
@@ -19,14 +18,12 @@ exports.createDiary = async function(req, res, next) {
             plan: req.body.diary.plan
           });
           await diary.save();
-          console.log('일기생성', diary);
           res.json({ diary });
         } else {
           (diary.good = req.body.diary.good),
             (diary.bad = req.body.diary.bad),
             (diary.plan = req.body.diary.plan);
           await diary.save();
-          console.log('기존일기', diary);
           res.json({ diary });
         }
       }

@@ -24,7 +24,6 @@ exports.facebookAuth = function(req, res, next) {
         const name = response.data.name;
         const profile_image = response.data.picture.data.url;
         User.find({ facebook_id: facebook_id }, function(err, data) {
-          console.log('유저 존재확인', data);
           const user = data[0];
           if (err) {
             return next(err);
@@ -39,11 +38,9 @@ exports.facebookAuth = function(req, res, next) {
               if (err) {
                 return next(err);
               }
-              console.log('유저생성');
               res.json({ user });
             });
           } else {
-            console.log('기존유저');
             res.json({ user });
           }
         });
